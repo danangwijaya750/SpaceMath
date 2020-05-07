@@ -18,6 +18,6 @@ public class GameConfig : MonoBehaviour
         {0,0,0,0,0,0}
     };
 
-    public static int [ ] enemiesScores={10,15,20};
-    public static int [ ] enemiesSpeed={10,10,10};
+    public static int [ ] enemiesScores = {10,15,20};
+    public static int [ ] enemiesSpeed = {10,10,10};
 }

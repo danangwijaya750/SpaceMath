@@ -9,6 +9,7 @@ public class EnemyScript : MonoBehaviour
     public int thisKey;
     
     public int enemyScore;
+    public int enemyType;
     public Sprite[] ships;
     private SpriteRenderer sprtRenderer;
     private TextMeshPro textMesh;
@@ -16,7 +17,7 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         sprtRenderer=gameObject.GetComponent<SpriteRenderer> ();
-        sprtRenderer.sprite =ships[0];
+        sprtRenderer.sprite =ships[enemyType];
         exploder=gameObject.GetComponent<ParticleSystem>();
         textMesh=gameObject.GetComponentInChildren<TextMeshPro>();
         // sprtRenderer.size=new Vector2(1f,1f);
@@ -42,6 +43,8 @@ public class EnemyScript : MonoBehaviour
                 sprtRenderer.enabled=false;
                 textMesh.enabled=false;
                 Destroy(gameObject,exploder.duration);
+                PlayerScript.scoring+=enemyScore;
+                PlayerScript.destroyedEnemy+=1;
             }
             
         }

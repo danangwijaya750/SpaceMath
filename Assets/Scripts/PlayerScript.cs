@@ -23,7 +23,8 @@ public class PlayerScript : MonoBehaviour
     public static bool isGameOver=false;
     public TextMeshPro gameStatus;
     public TextMeshPro finalScore;
-
+    public static int scoring;
+    public static int destroyedEnemy;
     void Start()
     { 
        InitStageAndLevel();
@@ -44,9 +45,11 @@ public class PlayerScript : MonoBehaviour
     private void gameOver(){
         gameOverView.SetActive(true);
         if(isGameOver){
-            gameStatus.text="Game Over";      
+            gameStatus.text="Game Over";
+            finalScore.text="Your Score : "+scoring;      
         }else{
             gameStatus.text="Stage Clear";
+            finalScore.text="Your Score : "+scoring; 
         }
     }
 
@@ -70,8 +73,6 @@ public class PlayerScript : MonoBehaviour
     }
 
     private void InitStageAndLevel(){
-        
-
           switch (stage)
         {
             case 1:
@@ -97,16 +98,24 @@ public class PlayerScript : MonoBehaviour
     private void QuestionGenerator(){
         AnswerHandler.enemiesStatic.Clear();
         var enemiesCount= GameConfig.enemiesPerLevel[stage-1,level-1];
-        for(int i =0;i<enemiesCount;i++){
-             //dict.Add(4,"2+2");
-             plusGenerator(0,20);
+        if(stage==1){
+            for(int i =0;i<enemiesCount;i++){
+                if(i%2==0){
+                    plusGenerator(0,20);
+                }else{
+                    minusGenerator(0,20);
+                }
+            }
+        }else if(stage==2){
+            for(int i =0;i<enemiesCount;i++){
+
+                plusGenerator(0,20);
+            }
+        }else if(stage==3){
+             for(int i =0;i<enemiesCount;i++){
+                plusGenerator(0,20);
+            }
         }
-        // dict.Add(4,"2+2");
-        // dict.Add(3,"2+1");
-        // dict.Add(5,"4+1");
-        // dict.Add(5,"3+2");
-        // dict.Add(1,"1+0");
-        // dict.Add(6,"2+4");
         StartCoroutine(spawnEnemy());
         
     }
@@ -123,14 +132,41 @@ public class PlayerScript : MonoBehaviour
         Debug.Log("added : "+rnd);
         
     } 
-    private void decraseGenerator(int lowest, int highest){
-
+    private void minusGenerator(int lowest, int highest){
+        int a=Random.Range(lowest,highest);
+        int b=Random.Range(lowest,highest);
+        var rnd=a-b;
+        while(dict.ContainsKey(rnd)||rnd<0){
+             a=Random.Range(lowest,highest);
+             b=Random.Range(lowest,highest);
+             rnd=a-b;
+        }
+        dict.Add(rnd,a+"-"+b);
+        Debug.Log("added : "+rnd);
     }
     private void multipleGenerator(int lowest, int highest){
-
+        int a=Random.Range(lowest,highest);
+        int b=Random.Range(lowest,highest);
+        var rnd=a*b;
+        while(dict.ContainsKey(rnd)||rnd>highest){
+             a=Random.Range(lowest,highest);
+             b=Random.Range(lowest,highest);
+             rnd=a*b;
+        }
+        dict.Add(rnd,a+"x"+b);
+        Debug.Log("added : "+rnd);
     }
     private void divideGenerator(int lowest, int highest){
-
+         int a=Random.Range(lowest,highest);
+        int b=Random.Range(lowest,highest);
+        var rnd=a/b;
+        while(dict.ContainsKey(rnd)||rnd>highest){
+             a=Random.Range(lowest,highest);
+             b=Random.Range(lowest,highest);
+             rnd=a/b;
+        }
+        dict.Add(rnd,a+":"+b);
+        Debug.Log("added : "+rnd);
     }
 
     private IEnumerator playerMoving(){
@@ -144,9 +180,12 @@ public class PlayerScript : MonoBehaviour
 
     private IEnumerator spawnEnemy(){
          foreach(var data in dict){
-           var position=new Vector3(Random.Range(posisi[0].position.x,posisi[1].position.x),posisi[0].position.y);
+            var rnd=Random.Range(0,3);
+            var position=new Vector3(Random.Range(posisi[0].position.x,posisi[1].position.x),posisi[0].position.y);
             var gObject = Instantiate(enemy,position,Quaternion.identity);
             gObject.thisKey=data.Key;
+            gObject.enemyScore=10;
+            gObject.enemyType=rnd;
             AnswerHandler.enemiesStatic.Add(data.Key,gObject.gameObject);
             gObject.GetComponentInChildren<TextMeshPro>().text=data.Value;
             yield return new WaitForSeconds(2f);
