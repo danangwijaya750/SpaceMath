@@ -14,12 +14,17 @@ public class EnemyScript : MonoBehaviour
     private SpriteRenderer sprtRenderer;
     private TextMeshPro textMesh;
     private ParticleSystem exploder;
+    Color[] colors = {Color.black,Color.yellow,Color.yellow};
+    public AudioClip[] audioClips;
+    public AudioSource audioSource;
     void Start()
     {
         sprtRenderer=gameObject.GetComponent<SpriteRenderer> ();
         sprtRenderer.sprite =ships[enemyType];
         exploder=gameObject.GetComponent<ParticleSystem>();
         textMesh=gameObject.GetComponentInChildren<TextMeshPro>();
+        var stage=PlayerScript.stage;
+        textMesh.color=colors[stage-1];
         // sprtRenderer.size=new Vector2(1f,1f);
         
     }
@@ -37,7 +42,11 @@ public class EnemyScript : MonoBehaviour
             Debug.Log("metu enemy");
             Bullet bulletTarget  = other.gameObject.GetComponent<Bullet>();
             if(bulletTarget.targetKey==thisKey){
+                audioSource.clip = audioClips[0];
+                audioSource.Play();
                 AnswerHandler.enemiesStatic.Remove(thisKey);
+                audioSource.clip = audioClips[1];
+                audioSource.Play();
                 Destroy(other.gameObject);
                 exploder.Play();
                 sprtRenderer.enabled=false;

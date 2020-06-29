@@ -98,6 +98,10 @@ MonoBehaviour:
   target: {fileID: 0}
   targetKey: 0
   bulletTrail: {fileID: 0}
+  bulletSprites:
+  - {fileID: 21300000, guid: e0da76f42a3f1c83882d1e66d552effc, type: 3}
+  - {fileID: 21300000, guid: 637d51bb6c6b76a4aa80f36a40d6eda5, type: 3}
+  - {fileID: 21300000, guid: 0443304976dc8e7b3ab1964a58449363, type: 3}
 --- !u!61 &-6567230877856391256
 BoxCollider2D:
   m_ObjectHideFlags: 0

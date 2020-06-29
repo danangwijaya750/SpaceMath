@@ -8,12 +8,15 @@ public class Bullet : MonoBehaviour
     public Transform target;
     public int targetKey;
     public Transform bulletTrail;
+    private SpriteRenderer sprtRenderer;
     private Rigidbody2D rigidbody;
+    public Sprite[] bulletSprites;
 
     void Start()
     {
         //rigidbody=GetComponent<Rigidbody2D>();
-    
+        sprtRenderer=gameObject.GetComponent<SpriteRenderer> ();
+        sprtRenderer.sprite =bulletSprites[GamePlayConfig.stage-1];
     }
 
     // Update is called once per frame

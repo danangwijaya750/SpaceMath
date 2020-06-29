@@ -18,9 +18,9 @@ public class BackgroundMove : MonoBehaviour
     }
     public void changeBg(){
         var atas=GameObject.Find("bg");
-        atas.GetComponent<SpriteRenderer>().sprite = bgSprite[PlayerScript.stage-1];
+        atas.GetComponent<SpriteRenderer>().sprite = bgSprite[GamePlayConfig.stage-1];
         var bawah=GameObject.Find("bgbawah");
-        bawah.GetComponent<SpriteRenderer>().sprite = bgSprite[PlayerScript.stage-1];
+        bawah.GetComponent<SpriteRenderer>().sprite = bgSprite[GamePlayConfig.stage-1];
         
     }
 
