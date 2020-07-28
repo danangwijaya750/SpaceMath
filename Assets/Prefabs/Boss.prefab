@@ -896,6 +896,7 @@ MonoBehaviour:
   ships:
   - {fileID: 21300000, guid: c8507828059fafaa19c886c2c2dbb3d7, type: 3}
   - {fileID: 21300000, guid: 26c7a27cead276ab7b63702d64325727, type: 3}
+  - {fileID: 21300000, guid: b0da81859bce716ea950919ccbfe54b3, type: 3}
   textMesh: {fileID: 8000741683910186364}
   healthBar: {fileID: 6332017626128667626}
   textTimer: {fileID: 3514784978402486137}
